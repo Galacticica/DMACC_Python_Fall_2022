@@ -9,10 +9,24 @@ convert to a integer type and output the integer.
 
 #Asks user for shoe size, casts answer to an integer, and prints that value
 shoe_size = input("Enter a shoe size: ")
-shoe_size_1_year = int(shoe_size) + 1
+#Casts the input to a float and then an integer (as without the float cast if a float value is inputted it results in an error) and adds 1
+shoe_size_1_year = int(float(shoe_size)) + 1
+#prints shoe size in 1 year
 print ("Shoe Size in 1 year: " + str(shoe_size_1_year))
 
+"""
+Input: 11
+Expected Output: 12
+Actual Output: 12
 
+Input: 6.5
+Expected Output: 7
+Actual Output: 7
+
+Input: potato
+Expected Output: ?
+Actual Output: ?
+"""
 
 
 
