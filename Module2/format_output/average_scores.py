@@ -25,7 +25,7 @@ first_name = input("Enter your first name: ")
 last_name = input("Enter your last name: ")
 
     #asking user for age
-age = input("Enter your age: ")
+age = int(float(input("Enter your age: ")))
 
     #asking user for scores (total_scores) times
 score_one = int(input("Enter your first score: "))
@@ -39,7 +39,7 @@ total = summ(score_one, score_two, score_three)
 avg_score = total / total_scores
 
 #prints the score profile
-print(f"{last_name}, {first_name} age: {age} average grade: {avg_score: 5.2f}")
+print(f"{last_name}, {first_name} age: {age: 3d} average grade: {avg_score: 5.2f}")
 
 
 '''
