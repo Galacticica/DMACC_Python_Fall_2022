@@ -50,8 +50,18 @@ else:
 print (f'{order: .2f}')
 
 #Apply tax
-order = order*tax
+order_after_tax = order*tax
 
-print (f'{order: .2f}')
+print (f'{order_after_tax: .2f}')
 
 #Add Shipping
+if order < 10.0:
+    shipping = 5.95
+elif order < 30.0:
+    shipping = 7.95
+elif order < 50.0:
+    shipping = 11.95
+else:
+    shipping = 0
+order = order_after_tax + shipping
+
