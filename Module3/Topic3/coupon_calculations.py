@@ -25,8 +25,6 @@ print("Here are the available discount coupons for use."
       "\n4. 20% off")
 discount = int(input("Enter the number that corresponds to the coupon you'd like to apply: "))
 
-print(f'{order: .2f}, {coupon}, {discount}')
-
 #Apply cash coupon using if and elif statements
 if coupon == 2:
     order = order - 5.0
@@ -34,8 +32,6 @@ elif coupon == 3:
     order = order - 10.0
 else:
     order = order
-
-print (f'{order: .2f}')
 
 #Apply discount coupon using if and elif statements
 if discount == 2:
@@ -47,12 +43,8 @@ elif discount == 4:
 else:
     order = order
 
-print (f'{order: .2f}')
-
 #Apply tax
 order_after_tax = order*tax
-
-print (f'{order_after_tax: .2f}')
 
 #Add Shipping
 if order < 10.0:
@@ -64,4 +56,6 @@ elif order < 50.0:
 else:
     shipping = 0
 order = order_after_tax + shipping
+
+print(f"Your order after coupons, tax, and shipping cost {order: .2f}.")
 
