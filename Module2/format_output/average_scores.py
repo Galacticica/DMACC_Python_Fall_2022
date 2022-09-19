@@ -26,11 +26,47 @@ last_name = input("Enter your last name: ")
 
     #asking user for age
 age = int(float(input("Enter your age: ")))
+try:
+    if (age >= 0):
+        print(f"{age} is valid")
+    else:
+        raise ValueError("Not a valid age")
+except:
+    print("You did not input a valid number")
 
     #asking user for scores (total_scores) times
-score_one = int(input("Enter your first score: "))
-score_two = int(input("Enter your second score: "))
-score_three = int(input("Enter your third score: "))
+score_one = input("Enter your first score: ")
+#Tests if score is valid
+try:
+    score_one = int(score_one)
+    if (score_one >= 0):
+        print(f"{score_one} is valid")
+    else:
+        raise ValueError("Not a valid score")
+except:
+    print("You did not input a valid number")
+
+score_two = input("Enter your second score: ")
+#Tests if score is valid
+try:
+    score_two = int(score_two)
+    if (score_two >= 0):
+        print(f"{score_two} is valid")
+    else:
+        raise ValueError("Not a valid score")
+except:
+    print("You did not input a valid number")
+
+score_three = input("Enter your third score: ")
+#Tests if score is valid
+try:
+    score_three = int(score_three)
+    if (score_three >= 0):
+        print(f"{score_three} is valid")
+    else:
+        raise ValueError("Not a valid score")
+except:
+    print("You did not input a valid number")
 
 #calculates sum of 3 scores
 total = summ(score_one, score_two, score_three)
