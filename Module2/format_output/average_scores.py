@@ -33,6 +33,8 @@ try:
         raise ValueError("Not a valid age")
 except:
     print("You did not input a valid number")
+finally:
+    print("All good")
 
     #asking user for scores (total_scores) times
 score_one = input("Enter your first score: ")
@@ -45,6 +47,8 @@ try:
         raise ValueError("Not a valid score")
 except:
     print("You did not input a valid number")
+finally:
+    print("All good")
 
 score_two = input("Enter your second score: ")
 #Tests if score is valid
@@ -56,6 +60,8 @@ try:
         raise ValueError("Not a valid score")
 except:
     print("You did not input a valid number")
+finally:
+    print("All good")
 
 score_three = input("Enter your third score: ")
 #Tests if score is valid
@@ -67,6 +73,8 @@ try:
         raise ValueError("Not a valid score")
 except:
     print("You did not input a valid number")
+finally:
+    print("All good")
 
 #calculates sum of 3 scores
 total = summ(score_one, score_two, score_three)
