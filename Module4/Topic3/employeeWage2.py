@@ -1,10 +1,20 @@
 '''
-Program: employeeWage.py
+Program: employeeWage2.py
 Author: Reagan Zierke
 Last date modified: 09/19/22
 
 This program prompts users for name, hours worked, and hourly wage, and prints out all the information.
 '''
+
+def weekly_wage(hours, wage):
+    '''
+    Calculates the weekly wage
+    :param hours:
+    :param wage:
+    :return:
+    '''
+    week_wage = hours * wage
+    return week_wage
 
 def employee_info():
     '''
@@ -32,11 +42,14 @@ def employee_info():
             raise ValueError("Not a valid wage")
     except ValueError:
         print("Input is not a valid number")
-    print(f"{name} worked {hours_worked} hours and earned ${hourly_wage: .2f} per hour.")
+    week_wage = weekly_wage(hours_worked, hourly_wage)
+    return(f"{name} worked {hours_worked} hours and earned ${week_wage: .2f}.")
 
 if __name__ == "__main__":
     try:
-        employee_info()
+        employee_wage = employee_info()
     except ValueError as err:
         print("Value error encountered")
+    else:
+        print(employee_wage)
 
