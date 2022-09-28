@@ -8,13 +8,21 @@ This program takes input 1-100 from the user and when the while loop is quit, pr
 
 #Declares user input list
 userInputs = []
+stopInputs = ['quit', 'q', 'exit', 'leave', 'stop']
 sent_val = 'continue'
+stop = False
 #Asks user for inputs of 1-100 until they stop
-while sent_val not in ['quit', 'q', 'exit', 'leave', 'stop']:
-    sent_val = input("Enter a number 1-100: ").lower()
+while sent_val not in stopInputs:
     while sent_val not in range(1,100):
-        print("This is not in range")
         sent_val = input("Enter a number 1-100: ").lower()
+        if sent_val in stopInputs:
+            stop = True
+            break
+        sent_val = int(sent_val)
+    if stop == True:
+        break
+    userInputs.append(sent_val)
+    sent_val = 0
 
 #Prints each value that the user input
 for x in userInputs:
