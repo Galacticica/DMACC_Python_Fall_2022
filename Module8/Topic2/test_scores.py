@@ -3,7 +3,7 @@ Program: test_scores.py
 Author: Reagan Zierke
 Last date modified: 10/19/22
 
-This program takes input of a set and an object and checks if that object is in the set.
+This program takes input of test scores and puts them in a dictionary, then takes the values of the dictionary to average the scores.
 '''
 
 
