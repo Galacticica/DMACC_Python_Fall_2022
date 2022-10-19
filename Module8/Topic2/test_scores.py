@@ -31,12 +31,19 @@ def get_test_scores():
 
 def average_scores(scores):
     length = len(scores)
+    try:
+        if length == 0:
+            raise ValueError()
+    except:
+        print("Can't have length of 0")
+        raise ValueError()
     keys = scores.keys()
     combined_scores = 0
     for x in keys:
         combined_scores = combined_scores + scores.get(x)
     average_score = combined_scores / length
     print (f'The average of the scores is {average_score: .2f}.')
+    return average_score
 
 
 
