@@ -6,4 +6,7 @@ class Person:
         self.address = addy
 
     def display(self):
-        return str(self.last_name) + ", " + str(self.first_name) + " lives at " + str(self.address)
+        if self.address == '':
+            return str(self.last_name) + ", " + str(self.first_name)
+        else:
+            return str(self.last_name) + ", " + str(self.first_name) + " lives at " + str(self.address)
