@@ -52,5 +52,5 @@ class UnitTesting(unittest.TestCase):
             s = t.Student("Parker", "Peter", "AcDec", 343)
 
     def test_object_not_created_error_gpa2(self):
-            with self.assertRaises(ValueError):
-                s = t.Student("Parker", "Peter", "AcDec", 5.3)
+        with self.assertRaises(ValueError):
+            s = t.Student("Parker", "Peter", "AcDec", 5.3)

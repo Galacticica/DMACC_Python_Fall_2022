@@ -10,17 +10,11 @@ It then allows for customers to add an item to their order and then ask for an i
 class Invoice:
     '''Invoice class'''
     #constructor code
-    def __init__(self, iID, cID, lname, fname, pn, addy, iwp = "{}"):
-        self.invoice_id = iID
+    def __init__(self, cID, lname, fname, pn):
         self.customer_id = cID
         self.last_name = lname
         self.first_name = fname
         self.phone_number = pn
-        self.address = addy
-        if iwp == "{}":
-            self.items_with_price = {}
-        else:
-            self.items_with_price = iwp
 
     #Adds new items to dictionary
     def add_item(self, item):
