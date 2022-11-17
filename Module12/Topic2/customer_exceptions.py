@@ -6,7 +6,7 @@ class Customer:
         try:
             if not isinstance(self.customer_id, int):
                 raise InvalidCustomerIdException
-            elif self.customer_id not in range(1000,9999):
+            elif self.customer_id not in range(1000, 9999):
                 raise InvalidCustomerIdException
         except InvalidCustomerIdException:
             pass
