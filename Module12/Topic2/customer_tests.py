@@ -25,11 +25,11 @@ class UnitTesting(unittest.TestCase):
 
     def test_invalid_first_name(self):
         with self.assertRaises(c.InvalidNameException):
-            c.Customer(1000, "Zierke", "32", "515-444-4444")
+            s = c.Customer(1000, "Zierke", "32", "515-444-4444")
 
     def test_invalid_phone_number(self):
         with self.assertRaises(c.InvalidPhoneNumberFormat):
-            c.Customer(1000, "Zierke", "R", "55-34344-32")
+            s = c.Customer(1000, "Zierke", "R", "55-34344-32")
 
     def test_customer_str(self):
-        c.Customer.__str__(self.customer)
+        s = c.Customer.__str__(self.customer)
