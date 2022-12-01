@@ -42,6 +42,8 @@ def select_all_students(conn):
 if __name__ == '__main__':
     conn = create_connection("pythonsqlite.db")
     with conn:
-        rows = select_all_students(conn)
+        rows = select_all_persons(conn)
         for row in rows:
             print(row)
+            if ('Rob') in row and ("Thomas") in row:
+                print(row[0])
