@@ -21,7 +21,19 @@ class Enemy:
         self.stealth = (enemies[random_enemy])[3]
 
 
+    def __str__(self):
+        return f"{self.name}\n" \
+               f"Health: {self.health}\n" \
+               f"Damage: {self.damage}\n" \
+               f"Strength: {self.strength}\n" \
+               f"Stealth: {self.stealth}"
 
+    def __repr__(self):
+        return f"{self.name}\n" \
+               f"Health: {self.health}\n" \
+               f"Damage: {self.damage}\n" \
+               f"Strength: {self.strength}\n" \
+               f"Stealth: {self.stealth}"
 
 
 
