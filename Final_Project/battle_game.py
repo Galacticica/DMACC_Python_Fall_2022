@@ -1,7 +1,4 @@
-import random
 from random import randint
-import time
-from time import sleep
 import person_class
 import profession_classes as pcs
 import enemy_class
@@ -133,9 +130,22 @@ def get_multiplier(current, opposing):
         multiplier = 1
     return multiplier
 
+
+def new_enemy():
+    global enemy_1
+    enemy_1.new_enemy()
+    enemy_label.config(text=f'{enemy_1.name}')
+    enemy_hp.config(text=f'{enemy_1.health}')
+    enemy_dmg.config(text=f'{enemy_1.damage}')
+    enemy_str.config(text=f'{enemy_1.strength}')
+    enemy_stl.config(text=f'{enemy_1.stealth}')
+    enemy_defeat.grid_remove()
+    new_enemy_button.grid_remove()
+    exit_win.grid_remove()
+
+
 def player_attack():
     '''This function attacks the enemy with the players stats when the attack button is clicked'''
-    #TODO: new enemy function
     global player_1
     global enemy_1
     multiplier_chance = randint(1, 3)
@@ -147,11 +157,9 @@ def player_attack():
     enemy_1.health = enemy_1.health - damage_dealt
     enemy_hp.config(text=f'{enemy_1.health}')
     if enemy_1.health <= 0:
-        enemy_defeat = tkinter.Label(game, text=f"You defeated {enemy_1.name}", width=15, height=2, font=('Helvetica bold',20))
+        enemy_defeat.config(text=f'You defeated {enemy_1.name}')
         enemy_defeat.grid(row=5, columnspan=2, column=3)
-        new_enemy_button = tkinter.Button(game, text="New Enemy", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove")
         new_enemy_button.grid(row=6, column=3)
-        exit_win = tkinter.Button(game, text="Exit", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove", command=game.destroy)
         exit_win.grid(row=6, column=4)
     else:
         enemy_attack(damage_dealt)
@@ -173,9 +181,7 @@ def enemy_attack(pd_dealt):
     player_1.health = player_1.health - damage_dealt
     player_hp.config(text=f'{player_1.health}')
     if player_1.health <= 0:
-        loser_label = tkinter.Label(game, text="You Lost", width=15, height=2, font=('Helvetica bold',20))
         loser_label.grid(row=5, column=3, columnspan=2)
-        exit_loser = tkinter.Button(game, text="Exit", width=15, height=2, font=('Helvetica bold',10), command=game.destroy, borderwidth=1, relief="groove")
         exit_loser.grid(row=6, column=3, columnspan=2)
 
     else:
@@ -256,7 +262,11 @@ item1_button.grid(row=4, column=4, columnspan=2)
 item2_button = tkinter.Button(game, text="Invisibility Cloak", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove", state=NORMAL, command=invis_used)
 item2_button.grid(row=4, column=6, columnspan=2)
 
-
+loser_label = tkinter.Label(game, text="You Lost", width=15, height=2, font=('Helvetica bold',20))
+exit_loser = tkinter.Button(game, text="Exit", width=15, height=2, font=('Helvetica bold',10), command=game.destroy, borderwidth=1, relief="groove")
+enemy_defeat = tkinter.Label(game, text=f"You defeated {enemy_1.name}", width=30, height=2, font=('Helvetica bold',20))
+new_enemy_button = tkinter.Button(game, text="New Enemy", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove", command=new_enemy)
+exit_win = tkinter.Button(game, text="Exit", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove", command=game.destroy)
 
 
 #Startup Screen
