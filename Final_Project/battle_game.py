@@ -98,7 +98,7 @@ def steroid_used():
     player_1.strength = player_1.strength + 1
     player_str.config(text=f'{player_1.strength}')
     steroids_left = False
-    enemy_attack()
+    enemy_attack(0)
 
 def invis_used():
     global player_1
@@ -106,7 +106,7 @@ def invis_used():
     player_1.stealth = player_1.stealth + 1
     player_stl.config(text=f'{player_1.stealth}')
     invis_left = False
-    enemy_attack()
+    enemy_attack(0)
 
 
 
@@ -133,8 +133,30 @@ def get_multiplier(current, opposing):
         multiplier = 1
     return multiplier
 
+def player_attack():
+    '''This function attacks the enemy with the players stats when the attack button is clicked'''
+    #TODO: new enemy function
+    global player_1
+    global enemy_1
+    multiplier_chance = randint(1, 3)
+    if multiplier_chance == 2:
+        multiplier = get_multiplier(player_1, enemy_1)
+    else:
+        multiplier = 1
+    damage_dealt = player_1.damage * multiplier
+    enemy_1.health = enemy_1.health - damage_dealt
+    enemy_hp.config(text=f'{enemy_1.health}')
+    if enemy_1.health <= 0:
+        enemy_defeat = tkinter.Label(game, text=f"You defeated {enemy_1.name}", width=15, height=2, font=('Helvetica bold',20))
+        enemy_defeat.grid(row=5, columnspan=2, column=3)
+        new_enemy_button = tkinter.Button(game, text="New Enemy", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove")
+        new_enemy_button.grid(row=6, column=3)
+        exit_win = tkinter.Button(game, text="Exit", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove", command=game.destroy)
+        exit_win.grid(row=6, column=4)
+    else:
+        enemy_attack(damage_dealt)
 
-def enemy_attack():
+def enemy_attack(pd_dealt):
     '''This function attacks the player with the enemies stats'''
     global player_1
     global enemy_1
@@ -147,14 +169,21 @@ def enemy_attack():
     else:
         multiplier = 1
     damage_dealt = enemy_1.damage * multiplier
-    action_display.config(text=f"{enemy_1.name} dealt {damage_dealt}")
+    action_display.config(text=f"You dealt {pd_dealt} | {enemy_1.name} dealt {damage_dealt}")
     player_1.health = player_1.health - damage_dealt
     player_hp.config(text=f'{player_1.health}')
-    attack_button['state'] = NORMAL
-    if steroids_left is True:
-        item1_button['state'] = NORMAL
-    if invis_left is True:
-        item2_button['state'] = NORMAL
+    if player_1.health <= 0:
+        loser_label = tkinter.Label(game, text="You Lost", width=15, height=2, font=('Helvetica bold',20))
+        loser_label.grid(row=5, column=3, columnspan=2)
+        exit_loser = tkinter.Button(game, text="Exit", width=15, height=2, font=('Helvetica bold',10), command=game.destroy, borderwidth=1, relief="groove")
+        exit_loser.grid(row=6, column=3, columnspan=2)
+
+    else:
+        attack_button['state'] = NORMAL
+        if steroids_left is True:
+            item1_button['state'] = NORMAL
+        if invis_left is True:
+            item2_button['state'] = NORMAL
 
 '''Class Setup / Variable Setup'''
 difficulty = ""
@@ -218,7 +247,7 @@ action_display = tkinter.Label(game, text="", height=2, width=60, font=('Helveti
 action_display.grid(row=3, column=0, columnspan=8)
 
 #Action buttons
-attack_button = tkinter.Button(game, text="Attack", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove", state=NORMAL)
+attack_button = tkinter.Button(game, text="Attack", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove", state=NORMAL, command=player_attack)
 attack_button.grid(row=4, column=0, columnspan=2)
 heal_button = tkinter.Button(game, text="Heal", width=15, height=2, font=('Helvetica bold',10), borderwidth=1, relief="groove", state=NORMAL, command=potion_used)
 heal_button.grid(row=4, column=2, columnspan=2)
