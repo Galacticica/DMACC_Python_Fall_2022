@@ -38,8 +38,9 @@ def hard_chosen():
     warrior_select.grid(row=4, column=1)
     ranger_select.grid(row=4, column=3)
 
+
 def warrior_chosen():
-    '''selects difficulty indicated by button pressed'''
+    '''selects class indicated by button pressed'''
     global chosen_class
     chosen_class = "warrior"
     warrior_select['state'] = DISABLED
@@ -47,7 +48,7 @@ def warrior_chosen():
     begin_button.grid(row=6, column=2)
 
 def ranger_chosen():
-    '''selects difficulty indicated by button pressed'''
+    '''selects class indicated by button pressed'''
     global chosen_class
     chosen_class = "ranger"
     warrior_select['state'] = DISABLED
@@ -68,12 +69,12 @@ def set_up_game():
     start_screen.destroy()
     enemy_1.new_enemy()
     player_label.config(text=f'{player_1.username}')
-    player_hp.config(text=f'{player_1.health}')
+    player_hp.config(text=f'{player_1.health: .1f}')
     player_dmg.config(text=f'{player_1.damage}')
     player_str.config(text=f'{player_1.strength}')
     player_stl.config(text=f'{player_1.stealth}')
     enemy_label.config(text=f'{enemy_1.name}')
-    enemy_hp.config(text=f'{enemy_1.health}')
+    enemy_hp.config(text=f'{enemy_1.health: .1f}')
     enemy_dmg.config(text=f'{enemy_1.damage}')
     enemy_str.config(text=f'{enemy_1.strength}')
     enemy_stl.config(text=f'{enemy_1.stealth}')
@@ -83,7 +84,7 @@ def potion_used():
     global player_1
     global health_potions_left
     player_1.health = player_1.health + 30
-    player_hp.config(text=f'{player_1.health}')
+    player_hp.config(text=f'{player_1.health: .1f}')
     health_potions_left = health_potions_left-1
     if health_potions_left <= 0:
         heal_button['state'] = DISABLED
@@ -132,16 +133,37 @@ def get_multiplier(current, opposing):
 
 
 def new_enemy():
+    '''This function gives the player a new enemy if they defeat the old one, assuming they want a new enemy'''
     global enemy_1
+    global player_1
+
+    def health_bonus():
+        more_health_bonus_total = player_1.strength + player_1.stealth
+        while more_health_bonus_total > 0:
+            health_chance = randint(1,3)
+            if health_chance == 1:
+                player_1.health = player_1.health + 10
+            more_health_bonus_total = more_health_bonus_total - 1
+        player_hp.config(text=f'{player_1.health: .1f}')
+
     enemy_1.new_enemy()
     enemy_label.config(text=f'{enemy_1.name}')
-    enemy_hp.config(text=f'{enemy_1.health}')
+    enemy_hp.config(text=f'{enemy_1.health: .1f}')
     enemy_dmg.config(text=f'{enemy_1.damage}')
     enemy_str.config(text=f'{enemy_1.strength}')
     enemy_stl.config(text=f'{enemy_1.stealth}')
+    attack_button['state'] = NORMAL
+    if health_potions_left > 0:
+        heal_button['state'] = NORMAL
+    if steroids_left is True:
+        item1_button['state'] = NORMAL
+    if invis_left is True:
+        item2_button['state'] = NORMAL
+    health_bonus()
     enemy_defeat.grid_remove()
     new_enemy_button.grid_remove()
     exit_win.grid_remove()
+
 
 
 def player_attack():
@@ -155,12 +177,16 @@ def player_attack():
         multiplier = 1
     damage_dealt = player_1.damage * multiplier
     enemy_1.health = enemy_1.health - damage_dealt
-    enemy_hp.config(text=f'{enemy_1.health}')
+    enemy_hp.config(text=f'{enemy_1.health : .1f}')
     if enemy_1.health <= 0:
         enemy_defeat.config(text=f'You defeated {enemy_1.name}')
         enemy_defeat.grid(row=5, columnspan=2, column=3)
         new_enemy_button.grid(row=6, column=3)
         exit_win.grid(row=6, column=4)
+        attack_button['state'] = DISABLED
+        item1_button['state'] = DISABLED
+        item2_button['state'] = DISABLED
+        heal_button['state'] = DISABLED
     else:
         enemy_attack(damage_dealt)
 
@@ -179,7 +205,7 @@ def enemy_attack(pd_dealt):
     damage_dealt = enemy_1.damage * multiplier
     action_display.config(text=f"You dealt {pd_dealt} | {enemy_1.name} dealt {damage_dealt}")
     player_1.health = player_1.health - damage_dealt
-    player_hp.config(text=f'{player_1.health}')
+    player_hp.config(text=f'{player_1.health: .1f}')
     if player_1.health <= 0:
         loser_label.grid(row=5, column=3, columnspan=2)
         exit_loser.grid(row=6, column=3, columnspan=2)
