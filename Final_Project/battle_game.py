@@ -60,6 +60,7 @@ def set_up_game():
     global player_1
     global enemy_1
     username = str(username_input.get())
+    #creates player object
     if chosen_class == 'warrior':
         player_1 = pcs.Warrior(username, difficulty)
     elif chosen_class == 'ranger':
@@ -67,6 +68,7 @@ def set_up_game():
     else:
         raise ValueError
     start_screen.destroy()
+    #updates the main gui with stats
     enemy_1.new_enemy()
     player_label.config(text=f'{player_1.username}')
     player_hp.config(text=f'{player_1.health: .1f}')
@@ -83,9 +85,11 @@ def potion_used():
     '''This function adds 30 health to the players hp if they use the item. It then checks if they have any left'''
     global player_1
     global health_potions_left
+    #adds 30 health and updates gui
     player_1.health = player_1.health + 30
     player_hp.config(text=f'{player_1.health: .1f}')
     health_potions_left = health_potions_left-1
+    #checks if any are left
     if health_potions_left <= 0:
         heal_button['state'] = DISABLED
     action_display.config(text="You healed 30 health")
@@ -93,17 +97,21 @@ def potion_used():
 def steroid_used():
     global player_1
     global steroids_left
+    #uses steroid
     player_1.strength = player_1.strength + 1
     player_str.config(text=f'{player_1.strength}')
     steroids_left = False
+    #initiates enemy attack
     enemy_attack(0)
 
 def invis_used():
     global player_1
     global invis_left
+    #uses invis cloak
     player_1.stealth = player_1.stealth + 1
     player_stl.config(text=f'{player_1.stealth}')
     invis_left = False
+    #initiates enemy attack
     enemy_attack(0)
 
 
@@ -138,6 +146,7 @@ def new_enemy():
     global player_1
 
     def health_bonus():
+        '''Does a calculation to randomly have a chance to add health for each strength and stealth point the player has'''
         more_health_bonus_total = player_1.strength + player_1.stealth
         while more_health_bonus_total > 0:
             health_chance = randint(1,3)
@@ -146,12 +155,14 @@ def new_enemy():
             more_health_bonus_total = more_health_bonus_total - 1
         player_hp.config(text=f'{player_1.health: .1f}')
 
+    #initializes a new enemy for enemy object and updates stats on gui
     enemy_1.new_enemy()
     enemy_label.config(text=f'{enemy_1.name}')
     enemy_hp.config(text=f'{enemy_1.health: .1f}')
     enemy_dmg.config(text=f'{enemy_1.damage}')
     enemy_str.config(text=f'{enemy_1.strength}')
     enemy_stl.config(text=f'{enemy_1.stealth}')
+    #reactivates buttons
     attack_button['state'] = NORMAL
     if health_potions_left > 0:
         heal_button['state'] = NORMAL
@@ -159,6 +170,7 @@ def new_enemy():
         item1_button['state'] = NORMAL
     if invis_left is True:
         item2_button['state'] = NORMAL
+    #runs health bonus
     health_bonus()
     enemy_defeat.grid_remove()
     new_enemy_button.grid_remove()
@@ -170,14 +182,17 @@ def player_attack():
     '''This function attacks the enemy with the players stats when the attack button is clicked'''
     global player_1
     global enemy_1
+    #runs multiplier at a random chance of 1 in 3
     multiplier_chance = randint(1, 3)
     if multiplier_chance == 2:
         multiplier = get_multiplier(player_1, enemy_1)
     else:
         multiplier = 1
+    #calculates damage and subtracts it from enemy health, then updates gui
     damage_dealt = player_1.damage * multiplier
     enemy_1.health = enemy_1.health - damage_dealt
     enemy_hp.config(text=f'{enemy_1.health : .1f}')
+    #if the enemy is dead the user can either fight a new enemy or exit the gui
     if enemy_1.health <= 0:
         enemy_defeat.config(text=f'You defeated {enemy_1.name}')
         enemy_defeat.grid(row=5, columnspan=2, column=3)
@@ -188,29 +203,35 @@ def player_attack():
         item2_button['state'] = DISABLED
         heal_button['state'] = DISABLED
     else:
+        #initiates enemy attack
         enemy_attack(damage_dealt)
 
 def enemy_attack(pd_dealt):
     '''This function attacks the player with the enemies stats'''
     global player_1
     global enemy_1
+    #disables buttons
     attack_button['state'] = DISABLED
     item1_button['state'] = DISABLED
     item2_button['state'] = DISABLED
+    #1 in 3 multiplier chance
     multiplier_chance = randint(1, 3)
     if multiplier_chance == 2:
         multiplier = get_multiplier(enemy_1, player_1)
     else:
         multiplier = 1
+    #calculates damage and subtracts it from player health, then updates gui
     damage_dealt = enemy_1.damage * multiplier
     action_display.config(text=f"You dealt {pd_dealt} | {enemy_1.name} dealt {damage_dealt}")
     player_1.health = player_1.health - damage_dealt
     player_hp.config(text=f'{player_1.health: .1f}')
     if player_1.health <= 0:
+        #if player dies, game ends
         loser_label.grid(row=5, column=3, columnspan=2)
         exit_loser.grid(row=6, column=3, columnspan=2)
 
     else:
+        #buttons reactivated
         attack_button['state'] = NORMAL
         if steroids_left is True:
             item1_button['state'] = NORMAL

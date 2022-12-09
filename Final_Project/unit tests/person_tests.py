@@ -17,3 +17,9 @@ class unitTesting(unittest.TestCase):
     def testInvalidDifficulty(self):
         with self.assertRaises(p.Not_Valid_Difficulty):
             s = p.Person("Bob", "extreme")
+
+    def test_string(self):
+        s = self.player.__str__()
+
+    def test_repr(self):
+        s = self.player.__repr__()

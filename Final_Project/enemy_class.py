@@ -3,7 +3,7 @@ import random
 enemies = {"Slime" : [25, 10, 1, 2],
            "Dragon" : [75, 25, 4, 1],
            "Healer" : [100, 15, 2, 4]}
-
+#updates with each new enemy
 class Enemy:
     def __init__(self):
         self.name = "Null"
@@ -13,6 +13,7 @@ class Enemy:
         self.stealth = 0
 
     def new_enemy(self):
+        '''selects a random enemy from the given dictionary above'''
         random_enemy = random.choice(list(enemies.keys()))
         self.name = random_enemy
         self.health = (enemies[random_enemy])[0]

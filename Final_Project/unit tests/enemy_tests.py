@@ -22,3 +22,9 @@ class UnitTests(unittest.TestCase):
         self.assertNotEqual(self.c.damage, 0)
         self.assertNotEqual(self.c.strength, 0)
         self.assertNotEqual(self.c.stealth, 0)
+
+    def test_string(self):
+        s = self.c.__str__()
+
+    def test_repr(self):
+        s = self.c.__repr__()
